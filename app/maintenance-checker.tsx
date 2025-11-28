@@ -251,54 +251,61 @@ function ResultsView({
   onReset: () => void;
 }) {
   return (
-    <div style={{ border: "2px solid #333", padding: "32px", background: "#fffef9" }}>
-      <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
-        MAINTENANCE REPORT
-      </h1>
-      <p style={{ margin: "0 0 20px 0", fontSize: "16px", color: "#444" }}>
-        {formatKm(odometer)} | {transmission} | {drivingCondition} driving
-      </p>
+    <div style={{ border: "2px solid #333", background: "#fffef9", display: "flex", flexDirection: "column", maxHeight: "calc(100vh - 200px)" }}>
+      {/* Fixed Header */}
+      <div style={{ padding: "32px 32px 0 32px", flexShrink: 0 }}>
+        <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
+          MAINTENANCE REPORT
+        </h1>
+        <p style={{ margin: "0 0 20px 0", fontSize: "16px", color: "#444" }}>
+          {formatKm(odometer)} | {transmission} | {drivingCondition} driving
+        </p>
+        <hr style={{ margin: "0 0 20px 0" }} />
+      </div>
 
-      <hr />
+      {/* Scrollable Content */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 32px" }}>
+        <Section
+          title="REPLACE NOW"
+          items={results.replace}
+          statusClass="status-replace"
+          emptyText="Nothing needs immediate replacement"
+        />
 
-      <Section
-        title="REPLACE NOW"
-        items={results.replace}
-        statusClass="status-replace"
-        emptyText="Nothing needs immediate replacement"
-      />
+        <Section
+          title="INSPECT"
+          items={results.inspect}
+          statusClass="status-inspect"
+          emptyText="Nothing needs inspection"
+        />
 
-      <Section
-        title="INSPECT"
-        items={results.inspect}
-        statusClass="status-inspect"
-        emptyText="Nothing needs inspection"
-      />
+        <Section
+          title="DUE SOON"
+          items={results.dueSoon}
+          statusClass="status-due-soon"
+          emptyText="Nothing due soon"
+        />
 
-      <Section
-        title="DUE SOON"
-        items={results.dueSoon}
-        statusClass="status-due-soon"
-        emptyText="Nothing due soon"
-      />
+        <Section
+          title="OK"
+          items={results.ok}
+          statusClass="status-ok"
+          emptyText=""
+          collapsed
+        />
+      </div>
 
-      <Section
-        title="OK"
-        items={results.ok}
-        statusClass="status-ok"
-        emptyText=""
-        collapsed
-      />
-
-      <hr />
-
-      <div style={{ display: "flex", gap: "16px", flexDirection: "column" }}>
-        <button onClick={() => generatePDF(results, odometer, transmission, drivingCondition)} style={{ width: "100%", fontWeight: "bold" }}>
-          [ DOWNLOAD PDF ]
-        </button>
-        <button onClick={onReset} style={{ width: "100%" }}>
-          &larr; Check Different Mileage
-        </button>
+      {/* Fixed Footer */}
+      <div style={{ padding: "0 32px 32px 32px", flexShrink: 0 }}>
+        <hr style={{ margin: "20px 0" }} />
+        <div style={{ display: "flex", gap: "16px", flexDirection: "column" }}>
+          <button onClick={() => generatePDF(results, odometer, transmission, drivingCondition)} style={{ width: "100%", fontWeight: "bold" }}>
+            [ DOWNLOAD PDF ]
+          </button>
+          <button onClick={onReset} style={{ width: "100%" }}>
+            &larr; Check Different Mileage
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -359,30 +366,32 @@ function Section({
               {emptyText}
             </p>
           )}
-          {items.map(({ item, result }) => (
+          {items.map(({ item, result }, index) => (
             <div
               key={item.name}
               style={{
-                paddingLeft: "28px",
-                marginBottom: "12px",
+                padding: "12px 12px 12px 28px",
                 fontSize: "16px",
+                background: index % 2 === 0 ? "#f5f5f2" : "transparent",
+                borderLeft: "3px solid currentColor",
+                marginLeft: "6px",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" }}>
-                <span>• {item.name}</span>
+                <span style={{ fontWeight: "bold" }}>{item.name}</span>
                 {result.kmUntilDue > 0 && (
-                  <span style={{ fontWeight: "bold" }}>
+                  <span style={{ fontWeight: "500", color: "#555" }}>
                     {formatKm(result.kmUntilDue)} left
                   </span>
                 )}
               </div>
               {result.intervalKm > 0 && (
-                <div style={{ fontSize: "14px", color: "#444", paddingLeft: "16px" }}>
+                <div style={{ fontSize: "14px", color: "#444", paddingLeft: "16px", marginTop: "4px" }}>
                   every {formatKm(result.intervalKm)}
                 </div>
               )}
               {item.notes && (
-                <div style={{ fontSize: "14px", color: "#666", paddingLeft: "16px", marginTop: "4px" }}>
+                <div style={{ fontSize: "13px", color: "#666", paddingLeft: "16px", marginTop: "6px", lineHeight: "1.4" }}>
                   {item.notes}
                 </div>
               )}
