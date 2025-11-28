@@ -71,18 +71,36 @@ export default function RootLayout({
             background: "#fffef9",
             borderTop: "1px solid #333",
             padding: "24px",
-            textAlign: "center",
           }}
         >
-          <p
+          <div
             style={{
-              margin: 0,
-              fontSize: "14px",
-              color: "#444",
+              maxWidth: "640px",
+              margin: "0 auto",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            For Philippine Jimny JB74 owners. Based on service manual intervals.
-          </p>
+            <a href="https://www.instagram.com/club74ph/" target="_blank" rel="noopener noreferrer">
+              <img
+                src="/club-logo.jpg"
+                alt="Car Club Logo"
+                style={{ height: "48px", borderRadius: "50%" }}
+              />
+            </a>
+            <p
+              style={{
+                margin: 0,
+                fontSize: "14px",
+                color: "#444",
+                textAlign: "right",
+              }}
+            >
+              For Philippine Jimny JB74 owners.<br />
+              Based on service manual intervals.
+            </p>
+          </div>
         </footer>
       </body>
     </html>
