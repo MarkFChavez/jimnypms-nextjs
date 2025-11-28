@@ -279,8 +279,8 @@ function ResultsView({
         <hr style={{ margin: "0 0 20px 0" }} />
       </div>
 
-      {/* Sticky scroll hint */}
-      <p style={{ textAlign: "center", fontSize: "14px", color: "#666", padding: "8px 32px", margin: 0, flexShrink: 0, borderBottom: "1px solid #eee" }}>
+      {/* Sticky scroll hint - mobile only */}
+      <p className="scroll-hint" style={{ textAlign: "center", fontSize: "14px", color: "#666", padding: "8px 32px", margin: 0, flexShrink: 0, borderBottom: "1px solid #eee" }}>
         ↓ Scroll for more ↓
       </p>
 
