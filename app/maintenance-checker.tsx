@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { jsPDF } from "jspdf";
 import {
   categorizeMaintenanceItems,
   formatKm,
@@ -78,7 +79,7 @@ export default function MaintenanceChecker({ items }: Props) {
             value={odometer}
             onChange={(e) => setOdometer(e.target.value)}
             placeholder="e.g. 45000"
-            style={{ width: "180px" }}
+            style={{ width: "100%", maxWidth: "180px" }}
             min="0"
             required
           />
@@ -154,6 +155,88 @@ export default function MaintenanceChecker({ items }: Props) {
   );
 }
 
+function generatePDF(
+  results: CategorizedItems,
+  odometer: number,
+  transmission: Transmission,
+  drivingCondition: DrivingCondition
+) {
+  const doc = new jsPDF();
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 20;
+  const contentWidth = pageWidth - margin * 2;
+  let y = 20;
+
+  // Helper to add text and handle page breaks
+  const addText = (text: string, fontSize: number, isBold = false, color: [number, number, number] = [0, 0, 0]) => {
+    doc.setFontSize(fontSize);
+    doc.setFont("helvetica", isBold ? "bold" : "normal");
+    doc.setTextColor(color[0], color[1], color[2]);
+
+    const lines = doc.splitTextToSize(text, contentWidth);
+    const lineHeight = fontSize * 0.5;
+
+    for (const line of lines) {
+      if (y + lineHeight > 280) {
+        doc.addPage();
+        y = 20;
+      }
+      doc.text(line, margin, y);
+      y += lineHeight;
+    }
+  };
+
+  const addSection = (
+    title: string,
+    items: Array<{ item: MaintenanceItem; result: SimpleMaintenanceResult }>,
+    color: [number, number, number]
+  ) => {
+    if (y > 250) {
+      doc.addPage();
+      y = 20;
+    }
+
+    y += 5;
+    addText(`${title} (${items.length})`, 14, true, color);
+    y += 2;
+
+    if (items.length === 0) {
+      addText("None", 10, false, [100, 100, 100]);
+    } else {
+      for (const { item, result } of items) {
+        const kmInfo = result.kmUntilDue > 0 ? ` - ${formatKm(result.kmUntilDue)} left` : "";
+        addText(`• ${item.name}${kmInfo}`, 11, false);
+        if (result.intervalKm > 0) {
+          addText(`  Every ${formatKm(result.intervalKm)}`, 9, false, [100, 100, 100]);
+        }
+        if (item.notes) {
+          addText(`  ${item.notes}`, 9, false, [100, 100, 100]);
+        }
+        y += 2;
+      }
+    }
+  };
+
+  // Header
+  addText("JIMNY PH MAINTENANCE REPORT", 18, true);
+  y += 3;
+  addText(`${formatKm(odometer)} | ${transmission} | ${drivingCondition} driving`, 11, false, [68, 68, 68]);
+  addText(`Generated: ${new Date().toLocaleDateString()}`, 9, false, [100, 100, 100]);
+  y += 5;
+
+  // Sections with colors
+  addSection("REPLACE NOW", results.replace, [196, 30, 58]);
+  addSection("INSPECT", results.inspect, [184, 134, 11]);
+  addSection("DUE SOON", results.dueSoon, [47, 84, 150]);
+  addSection("OK", results.ok, [46, 125, 50]);
+
+  // Footer
+  y += 10;
+  addText("Based on Suzuki Jimny JB74 service manual intervals.", 8, false, [100, 100, 100]);
+
+  doc.save(`jimny-maintenance-${odometer}km.pdf`);
+}
+
 function ResultsView({
   results,
   odometer,
@@ -209,9 +292,14 @@ function ResultsView({
 
       <hr />
 
-      <button onClick={onReset} style={{ width: "100%" }}>
-        &larr; Check Different Mileage
-      </button>
+      <div style={{ display: "flex", gap: "16px", flexDirection: "column" }}>
+        <button onClick={() => generatePDF(results, odometer, transmission, drivingCondition)} style={{ width: "100%", fontWeight: "bold" }}>
+          [ DOWNLOAD PDF ]
+        </button>
+        <button onClick={onReset} style={{ width: "100%" }}>
+          &larr; Check Different Mileage
+        </button>
+      </div>
     </div>
   );
 }
@@ -291,6 +379,11 @@ function Section({
               {result.intervalKm > 0 && (
                 <div style={{ fontSize: "14px", color: "#444", paddingLeft: "16px" }}>
                   every {formatKm(result.intervalKm)}
+                </div>
+              )}
+              {item.notes && (
+                <div style={{ fontSize: "14px", color: "#666", paddingLeft: "16px", marginTop: "4px" }}>
+                  {item.notes}
                 </div>
               )}
             </div>
