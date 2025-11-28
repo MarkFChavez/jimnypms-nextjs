@@ -1,13 +1,13 @@
 // Simple types for the YAML config
 export type Transmission = "manual" | "automatic";
-export type DrivingCondition = "normal" | "severe";
+export type DrivingCondition = "normal" | "heavy";
 export type SimpleStatus = "replace" | "inspect" | "due-soon" | "ok";
 
 export interface MaintenanceItem {
   name: string;
   interval: {
     normal: number;
-    severe: number;
+    heavy: number;
   };
   for?: "all" | "manual" | "automatic";
   notes?: string;

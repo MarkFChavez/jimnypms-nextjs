@@ -20,7 +20,7 @@ export default function MaintenanceChecker({ items }: Props) {
   const [showResults, setShowResults] = useState(false);
   const [odometer, setOdometer] = useState("");
   const [transmission, setTransmission] = useState<Transmission>("manual");
-  const [drivingCondition, setDrivingCondition] = useState<DrivingCondition>("normal");
+  const [drivingCondition, setDrivingCondition] = useState<DrivingCondition>("heavy");
   const [results, setResults] = useState<CategorizedItems | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -58,19 +58,19 @@ export default function MaintenanceChecker({ items }: Props) {
   }
 
   return (
-    <div style={{ border: "1px solid #333", padding: "24px", background: "#fffef9" }}>
-      <h1 style={{ margin: "0 0 4px 0", fontSize: "18px", fontWeight: "bold", letterSpacing: "1px" }}>
-        JIMNY MAINTENANCE CHECK
+    <div style={{ border: "2px solid #333", padding: "32px", background: "#fffef9" }}>
+      <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
+        MAINTENANCE CHECK
       </h1>
-      <p style={{ margin: "0 0 24px 0", fontSize: "12px", color: "#666" }}>
-        Suzuki Jimny Gen 4 (JB64/JB74)
+      <p style={{ margin: "0 0 28px 0", fontSize: "16px", color: "#444" }}>
+        Suzuki Jimny JB74 - Philippine Edition
       </p>
 
       <hr />
 
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}>
+        <div style={{ marginBottom: "28px" }}>
+          <label style={{ display: "block", marginBottom: "12px", fontSize: "18px", fontWeight: "bold" }}>
             Current Odometer:
           </label>
           <input
@@ -78,71 +78,75 @@ export default function MaintenanceChecker({ items }: Props) {
             value={odometer}
             onChange={(e) => setOdometer(e.target.value)}
             placeholder="e.g. 45000"
-            style={{ width: "150px", fontSize: "16px" }}
+            style={{ width: "180px" }}
             min="0"
             required
           />
-          <span style={{ marginLeft: "8px", color: "#666" }}>km</span>
+          <span style={{ marginLeft: "12px", color: "#444", fontSize: "18px" }}>km</span>
         </div>
 
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}>
+        <div style={{ marginBottom: "28px" }}>
+          <label style={{ display: "block", marginBottom: "12px", fontSize: "18px", fontWeight: "bold" }}>
             Transmission:
           </label>
-          <label style={{ marginRight: "20px", cursor: "pointer" }}>
-            <input
-              type="radio"
-              name="transmission"
-              value="manual"
-              checked={transmission === "manual"}
-              onChange={() => setTransmission("manual")}
-            />
-            Manual
-          </label>
-          <label style={{ cursor: "pointer" }}>
-            <input
-              type="radio"
-              name="transmission"
-              value="automatic"
-              checked={transmission === "automatic"}
-              onChange={() => setTransmission("automatic")}
-            />
-            Automatic
-          </label>
+          <div style={{ display: "flex", gap: "32px", flexWrap: "wrap" }}>
+            <label style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
+              <input
+                type="radio"
+                name="transmission"
+                value="manual"
+                checked={transmission === "manual"}
+                onChange={() => setTransmission("manual")}
+              />
+              <span style={{ fontSize: "18px" }}>Manual</span>
+            </label>
+            <label style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
+              <input
+                type="radio"
+                name="transmission"
+                value="automatic"
+                checked={transmission === "automatic"}
+                onChange={() => setTransmission("automatic")}
+              />
+              <span style={{ fontSize: "18px" }}>Automatic</span>
+            </label>
+          </div>
         </div>
 
-        <div style={{ marginBottom: "24px" }}>
-          <label style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}>
+        <div style={{ marginBottom: "32px" }}>
+          <label style={{ display: "block", marginBottom: "12px", fontSize: "18px", fontWeight: "bold" }}>
             Driving Conditions:
           </label>
-          <label style={{ marginRight: "20px", cursor: "pointer" }}>
-            <input
-              type="radio"
-              name="driving"
-              value="normal"
-              checked={drivingCondition === "normal"}
-              onChange={() => setDrivingCondition("normal")}
-            />
-            Normal
-          </label>
-          <label style={{ cursor: "pointer" }}>
-            <input
-              type="radio"
-              name="driving"
-              value="severe"
-              checked={drivingCondition === "severe"}
-              onChange={() => setDrivingCondition("severe")}
-            />
-            Severe
-          </label>
-          <p style={{ margin: "8px 0 0 0", fontSize: "11px", color: "#666" }}>
-            Severe: dusty roads, off-road, towing, extreme temperatures
+          <div style={{ display: "flex", gap: "32px", flexWrap: "wrap" }}>
+            <label style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
+              <input
+                type="radio"
+                name="driving"
+                value="normal"
+                checked={drivingCondition === "normal"}
+                onChange={() => setDrivingCondition("normal")}
+              />
+              <span style={{ fontSize: "18px" }}>Normal</span>
+            </label>
+            <label style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
+              <input
+                type="radio"
+                name="driving"
+                value="heavy"
+                checked={drivingCondition === "heavy"}
+                onChange={() => setDrivingCondition("heavy")}
+              />
+              <span style={{ fontSize: "18px" }}>Heavy Use</span>
+            </label>
+          </div>
+          <p style={{ margin: "12px 0 0 0", fontSize: "14px", color: "#444" }}>
+            Heavy Use: provincial roads, flooding, off-road, heavy traffic
           </p>
         </div>
 
         <hr />
 
-        <button type="submit" style={{ width: "100%", padding: "12px", fontWeight: "bold" }}>
+        <button type="submit" style={{ width: "100%", fontWeight: "bold" }}>
           [ CHECK MAINTENANCE ]
         </button>
       </form>
@@ -164,11 +168,11 @@ function ResultsView({
   onReset: () => void;
 }) {
   return (
-    <div style={{ border: "1px solid #333", padding: "24px", background: "#fffef9" }}>
-      <h1 style={{ margin: "0 0 4px 0", fontSize: "18px", fontWeight: "bold", letterSpacing: "1px" }}>
+    <div style={{ border: "2px solid #333", padding: "32px", background: "#fffef9" }}>
+      <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
         MAINTENANCE REPORT
       </h1>
-      <p style={{ margin: "0 0 16px 0", fontSize: "12px", color: "#666" }}>
+      <p style={{ margin: "0 0 20px 0", fontSize: "16px", color: "#444" }}>
         {formatKm(odometer)} | {transmission} | {drivingCondition} driving
       </p>
 
@@ -230,30 +234,31 @@ function Section({
   const count = items.length;
 
   return (
-    <div style={{ marginBottom: "20px" }}>
+    <div style={{ marginBottom: "28px" }}>
       <h2
         className={statusClass}
         style={{
-          margin: "0 0 8px 0",
-          fontSize: "14px",
+          margin: "0 0 12px 0",
+          fontSize: "18px",
           fontWeight: "bold",
           cursor: collapsed ? "pointer" : "default",
           display: "flex",
           alignItems: "center",
-          gap: "8px",
+          gap: "12px",
         }}
         onClick={() => collapsed && setIsExpanded(!isExpanded)}
       >
         <span style={{
           display: "inline-block",
-          width: "12px",
-          height: "12px",
-          border: "1px solid currentColor",
+          width: "16px",
+          height: "16px",
+          border: "2px solid currentColor",
           background: count > 0 ? "currentColor" : "transparent",
+          flexShrink: 0,
         }} />
         {title} ({count})
         {collapsed && (
-          <span style={{ fontSize: "12px", color: "#666" }}>
+          <span style={{ fontSize: "14px", color: "#444" }}>
             {isExpanded ? "[-]" : "[+]"}
           </span>
         )}
@@ -262,7 +267,7 @@ function Section({
       {isExpanded && (
         <>
           {items.length === 0 && emptyText && (
-            <p style={{ margin: "0", fontSize: "12px", color: "#666", paddingLeft: "20px" }}>
+            <p style={{ margin: "0", fontSize: "16px", color: "#444", paddingLeft: "28px" }}>
               {emptyText}
             </p>
           )}
@@ -270,21 +275,21 @@ function Section({
             <div
               key={item.name}
               style={{
-                paddingLeft: "20px",
-                marginBottom: "8px",
-                fontSize: "13px",
+                paddingLeft: "28px",
+                marginBottom: "12px",
+                fontSize: "16px",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" }}>
                 <span>• {item.name}</span>
                 {result.kmUntilDue > 0 && (
-                  <span style={{ color: "#666" }}>
+                  <span style={{ fontWeight: "bold" }}>
                     {formatKm(result.kmUntilDue)} left
                   </span>
                 )}
               </div>
               {result.intervalKm > 0 && (
-                <div style={{ fontSize: "11px", color: "#666", paddingLeft: "12px" }}>
+                <div style={{ fontSize: "14px", color: "#444", paddingLeft: "16px" }}>
                   every {formatKm(result.intervalKm)}
                 </div>
               )}
