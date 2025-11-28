@@ -1,17 +1,20 @@
-import {
-  MaintenanceItem,
-  MaintenanceInterval,
-  DrivingCondition,
-  Transmission,
-} from "./data/types";
-
+// Simple types for the YAML config
+export type Transmission = "manual" | "automatic";
+export type DrivingCondition = "normal" | "severe";
 export type SimpleStatus = "replace" | "inspect" | "due-soon" | "ok";
 
-export interface SimpleMaintenanceResult {
-  status: SimpleStatus;
-  kmUntilDue: number;
-  intervalKm: number;
-  percentUsed: number;
+export interface MaintenanceItem {
+  name: string;
+  interval: {
+    normal: number;
+    severe: number;
+  };
+  for?: "all" | "manual" | "automatic";
+  notes?: string;
+}
+
+export interface MaintenanceConfig {
+  items: MaintenanceItem[];
 }
 
 export interface VehicleInput {
@@ -20,42 +23,35 @@ export interface VehicleInput {
   drivingCondition: DrivingCondition;
 }
 
-export function getApplicableInterval(
-  item: MaintenanceItem,
-  drivingCondition: DrivingCondition
-): MaintenanceInterval {
-  // Use Asia-Pacific intervals as default
-  return item.intervals["asia-pacific"][drivingCondition];
+export interface SimpleMaintenanceResult {
+  status: SimpleStatus;
+  kmUntilDue: number;
+  intervalKm: number;
+  percentUsed: number;
+}
+
+export interface CategorizedItems {
+  replace: Array<{ item: MaintenanceItem; result: SimpleMaintenanceResult }>;
+  inspect: Array<{ item: MaintenanceItem; result: SimpleMaintenanceResult }>;
+  dueSoon: Array<{ item: MaintenanceItem; result: SimpleMaintenanceResult }>;
+  ok: Array<{ item: MaintenanceItem; result: SimpleMaintenanceResult }>;
 }
 
 export function isItemApplicable(
   item: MaintenanceItem,
   transmission: Transmission
 ): boolean {
-  if (!item.applicableTo) return true;
-
-  if (item.applicableTo.transmission) {
-    if (!item.applicableTo.transmission.includes(transmission)) {
-      return false;
-    }
-  }
-
-  // Skip coolant type filtering - show generic coolant message
-  if (item.applicableTo.coolantType) {
-    return false;
-  }
-
-  return true;
+  if (!item.for || item.for === "all") return true;
+  return item.for === transmission;
 }
 
 export function calculateSimpleStatus(
   item: MaintenanceItem,
   vehicle: VehicleInput
 ): SimpleMaintenanceResult {
-  const interval = getApplicableInterval(item, vehicle.drivingCondition);
+  const intervalKm = item.interval[vehicle.drivingCondition];
 
-  // If no km interval, return as OK (time-based only items)
-  if (interval.km === null || interval.km === 0) {
+  if (!intervalKm || intervalKm === 0) {
     return {
       status: "ok",
       kmUntilDue: 0,
@@ -65,10 +61,9 @@ export function calculateSimpleStatus(
   }
 
   // Calculate where we are in the current interval cycle
-  // e.g., oil change every 10,000km. At 45,000km → we're 5,000km into the cycle (50%)
-  const kmIntoCurrentCycle = vehicle.odometer % interval.km;
-  const kmUntilDue = interval.km - kmIntoCurrentCycle;
-  const percentUsed = Math.round((kmIntoCurrentCycle / interval.km) * 100);
+  const kmIntoCurrentCycle = vehicle.odometer % intervalKm;
+  const kmUntilDue = intervalKm - kmIntoCurrentCycle;
+  const percentUsed = Math.round((kmIntoCurrentCycle / intervalKm) * 100);
 
   // Determine status based on percentage through interval
   let status: SimpleStatus = "ok";
@@ -83,20 +78,9 @@ export function calculateSimpleStatus(
   return {
     status,
     kmUntilDue,
-    intervalKm: interval.km,
+    intervalKm,
     percentUsed,
   };
-}
-
-export function formatKm(km: number): string {
-  return km.toLocaleString() + " km";
-}
-
-export interface CategorizedItems {
-  replace: Array<{ item: MaintenanceItem; result: SimpleMaintenanceResult }>;
-  inspect: Array<{ item: MaintenanceItem; result: SimpleMaintenanceResult }>;
-  dueSoon: Array<{ item: MaintenanceItem; result: SimpleMaintenanceResult }>;
-  ok: Array<{ item: MaintenanceItem; result: SimpleMaintenanceResult }>;
 }
 
 export function categorizeMaintenanceItems(
@@ -116,7 +100,6 @@ export function categorizeMaintenanceItems(
     }
 
     const status = calculateSimpleStatus(item, vehicle);
-
     const entry = { item, result: status };
 
     switch (status.status) {
@@ -147,4 +130,8 @@ export function categorizeMaintenanceItems(
   result.ok.sort(sortByPercent);
 
   return result;
+}
+
+export function formatKm(km: number): string {
+  return km.toLocaleString() + " km";
 }

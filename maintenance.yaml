@@ -1,0 +1,148 @@
+# Jimny Maintenance Schedule
+# Suzuki Jimny Gen 4 (JB64/JB74)
+#
+# All intervals in kilometers (km)
+# "for" can be: all, manual, automatic
+#
+# Edit this file to customize your maintenance schedule
+
+items:
+  # === ENGINE ===
+  - name: Engine Oil & Filter
+    interval:
+      normal: 15000
+      severe: 7500
+    notes: Use 0W-20 or 5W-30 synthetic oil. Capacity ~4L with filter.
+
+  - name: Spark Plugs
+    interval:
+      normal: 105000
+      severe: 10000
+    notes: NGK KR6A-10 or Denso ZXU20PR11. Gap 1.0-1.1mm.
+
+  - name: Valve Clearance
+    interval:
+      normal: 20000
+      severe: 20000
+    notes: Intake 0.17-0.23mm, Exhaust 0.27-0.33mm (cold).
+
+  - name: Accessory Drive Belt
+    interval:
+      normal: 60000
+      severe: 45000
+    notes: Inspect at 30,000 km intervals.
+
+  # === FILTERS ===
+  - name: Engine Air Filter
+    interval:
+      normal: 45000
+      severe: 30000
+    notes: Inspect every 15,000 km. Replace more often in dusty conditions.
+
+  - name: Fuel Filter
+    interval:
+      normal: 105000
+      severe: 105000
+    notes: Replace more often if using low-quality fuel.
+
+  - name: Cabin Air Filter
+    interval:
+      normal: 30000
+      severe: 15000
+    notes: Not all Jimnys have cabin filter from factory. Check if installed.
+
+  - name: A/C Filter
+    interval:
+      normal: 30000
+      severe: 22500
+    notes: Inspect at 15,000 km intervals.
+
+  # === TRANSMISSION & DRIVETRAIN ===
+  - name: Manual Transmission Oil
+    interval:
+      normal: 45000
+      severe: 60000
+    for: manual
+    notes: 75W-80 GL-4. Capacity 1.2L.
+
+  - name: Automatic Transmission Fluid
+    interval:
+      normal: 165000
+      severe: 30000
+    for: automatic
+    notes: Suzuki ATF3317. Capacity 3-4L. Inspect level every 45,000 km.
+
+  - name: Transfer Case Oil
+    interval:
+      normal: 45000
+      severe: 60000
+    notes: 75W-80 GL-4 (same as manual trans). Capacity 1.2L.
+
+  - name: Front Differential Oil
+    interval:
+      normal: 30000
+      severe: 15000
+    notes: 75W-85 GL-5 synthetic. Capacity 1.6L.
+
+  - name: Rear Differential Oil
+    interval:
+      normal: 30000
+      severe: 15000
+    notes: 75W-85 GL-5 synthetic. Capacity 1.3L.
+
+  # === BRAKES ===
+  - name: Brake Fluid
+    interval:
+      normal: 30000
+      severe: 30000
+    notes: DOT-3 required (DOT-4 compatible). Capacity ~800mL. Shared with clutch on manual.
+
+  - name: Front Brake Pads
+    interval:
+      normal: 15000
+      severe: 15000
+    notes: Replace when pad thickness < 2mm. OEM 55200-70AA0.
+
+  - name: Rear Brake Drums & Shoes
+    interval:
+      normal: 30000
+      severe: 30000
+    notes: Replace shoes when lining thickness < 1.5mm.
+
+  # === FLUIDS ===
+  - name: Engine Coolant
+    interval:
+      normal: 150000
+      severe: 150000
+    notes: Blue (Super Long Life) - first change at 150k/8yrs, then 75k/4yrs. Green (Long Life) - every 45k/3yrs. Capacity ~5L.
+
+  # === OTHER ===
+  - name: Wheel Bearings
+    interval:
+      normal: 30000
+      severe: 15000
+    notes: Check for play and unusual noise.
+
+  - name: Propeller Shafts
+    interval:
+      normal: 45000
+      severe: 15000
+    notes: Grease U-joints with Suzuki Super Grease C (99000-25030).
+
+  - name: Suspension System
+    interval:
+      normal: 30000
+      severe: 30000
+    notes: Check for leaks, damage, worn bushings.
+
+  - name: Steering System
+    interval:
+      normal: 30000
+      severe: 30000
+    notes: Electric power steering - no fluid to change.
+
+  - name: Tyres & Wheels
+    interval:
+      normal: 15000
+      severe: 15000
+    notes: Rotate tyres every oil change. Check pressure monthly.
