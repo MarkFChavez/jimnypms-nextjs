@@ -82,12 +82,18 @@ export default function RootLayout({
               alignItems: "center",
             }}
           >
-            <a href="https://www.instagram.com/club74ph/" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.instagram.com/club74ph/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}
+            >
               <img
                 src="/club-logo.jpg"
                 alt="Car Club Logo"
                 style={{ height: "48px", borderRadius: "50%" }}
               />
+              <span style={{ color: "#444", fontSize: "14px" }}>@club74ph</span>
             </a>
             <p
               style={{
