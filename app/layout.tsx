@@ -129,6 +129,9 @@ export default function RootLayout({
               For Philippine Jimny JB74 owners.<br />
               Based on service manual intervals.
             </p>
+            <p style={{ margin: 0, fontSize: "12px", color: "#888" }}>
+              v1.0
+            </p>
           </div>
         </footer>
       </body>
