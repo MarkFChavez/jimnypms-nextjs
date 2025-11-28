@@ -76,7 +76,7 @@ export default function MaintenanceChecker({ items }: Props) {
       </span>
 
       <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
-        MAINTENANCE CHECK
+        WHAT'S DUE?
       </h1>
       <p style={{ margin: "0 0 28px 0", fontSize: "16px", color: "#444" }}>
         Suzuki Jimny JB74 - Philippine Edition
