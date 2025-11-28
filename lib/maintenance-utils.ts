@@ -3,6 +3,15 @@ export type Transmission = "manual" | "automatic";
 export type DrivingCondition = "normal" | "heavy";
 export type SimpleStatus = "replace" | "inspect" | "due-soon" | "ok";
 
+// Maintenance profiles for different owner preferences (only affects oil change interval)
+export const MAINTENANCE_PROFILES = {
+  conservative: { label: "Conservative", interval: "10k", oilChangeKm: 10000 },
+  serviceManual: { label: "Service Manual", interval: "15k", oilChangeKm: 15000 },
+  extended: { label: "Extended", interval: "20k", oilChangeKm: 20000 },
+} as const;
+
+export type MaintenanceProfile = keyof typeof MAINTENANCE_PROFILES;
+
 export interface MaintenanceItem {
   name: string;
   interval: {
@@ -22,6 +31,7 @@ export interface VehicleInput {
   odometer: number;
   transmission: Transmission;
   drivingCondition: DrivingCondition;
+  profile: MaintenanceProfile;
 }
 
 export interface SimpleMaintenanceResult {
@@ -50,7 +60,11 @@ export function calculateSimpleStatus(
   item: MaintenanceItem,
   vehicle: VehicleInput
 ): SimpleMaintenanceResult {
-  const intervalKm = item.interval[vehicle.drivingCondition];
+  // Profile only affects "Engine Oil & Filter" (not break-in)
+  const isOilChange = item.name === "Engine Oil & Filter" && !item.oneTime;
+  const intervalKm = isOilChange
+    ? MAINTENANCE_PROFILES[vehicle.profile].oilChangeKm
+    : item.interval[vehicle.drivingCondition];
 
   if (!intervalKm || intervalKm === 0) {
     return {
@@ -107,9 +121,11 @@ export function categorizeMaintenanceItems(
     }
 
     // Skip one-time items that are already completed
-    const intervalKm = item.interval[vehicle.drivingCondition];
-    if (item.oneTime && vehicle.odometer > intervalKm) {
-      continue;
+    if (item.oneTime) {
+      const intervalKm = item.interval[vehicle.drivingCondition];
+      if (vehicle.odometer > intervalKm) {
+        continue;
+      }
     }
 
     const status = calculateSimpleStatus(item, vehicle);

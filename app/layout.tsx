@@ -82,19 +82,31 @@ export default function RootLayout({
               alignItems: "center",
             }}
           >
-            <a
-              href="https://www.instagram.com/club74ph/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}
-            >
-              <img
-                src="/club-logo.jpg"
-                alt="Car Club Logo"
-                style={{ height: "48px", borderRadius: "50%" }}
-              />
-              <span style={{ color: "#444", fontSize: "14px" }}>@club74ph</span>
-            </a>
+            <div style={{ position: "relative", display: "inline-block" }}>
+              <a
+                href="https://www.instagram.com/club74ph/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="/club-logo.jpg"
+                  alt="Club74PH Logo"
+                  style={{ height: "56px", borderRadius: "50%" }}
+                />
+              </a>
+              <a
+                href="https://www.instagram.com/happythejimny"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ position: "absolute", bottom: "-4px", right: "-12px" }}
+              >
+                <img
+                  src="/footer-logo.jpg"
+                  alt="Happy The Jimny Logo"
+                  style={{ height: "32px", borderRadius: "50%", border: "2px solid #fffef9" }}
+                />
+              </a>
+            </div>
             <p
               style={{
                 margin: 0,

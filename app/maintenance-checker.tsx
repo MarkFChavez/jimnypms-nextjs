@@ -11,6 +11,8 @@ import {
   SimpleMaintenanceResult,
   DrivingCondition,
   Transmission,
+  MaintenanceProfile,
+  MAINTENANCE_PROFILES,
 } from "@/lib/maintenance-utils";
 
 interface Props {
@@ -21,6 +23,7 @@ export default function MaintenanceChecker({ items }: Props) {
   const [showResults, setShowResults] = useState(false);
   const [odometer, setOdometer] = useState("");
   const [transmission, setTransmission] = useState<Transmission>("automatic");
+  const [profile, setProfile] = useState<MaintenanceProfile>("conservative");
   const [drivingCondition, setDrivingCondition] = useState<DrivingCondition>("normal");
   const [results, setResults] = useState<CategorizedItems | null>(null);
 
@@ -32,6 +35,7 @@ export default function MaintenanceChecker({ items }: Props) {
     const vehicle: VehicleInput = {
       odometer: km,
       transmission,
+      profile,
       drivingCondition,
     };
 
@@ -42,6 +46,7 @@ export default function MaintenanceChecker({ items }: Props) {
 
   const handleReset = () => {
     setOdometer("");
+    setProfile("conservative");
     setShowResults(false);
     setResults(null);
   };
@@ -52,6 +57,7 @@ export default function MaintenanceChecker({ items }: Props) {
         results={results}
         odometer={parseInt(odometer, 10)}
         transmission={transmission}
+        profile={profile}
         drivingCondition={drivingCondition}
         onReset={handleReset}
       />
@@ -100,6 +106,41 @@ export default function MaintenanceChecker({ items }: Props) {
             autoFocus
           />
           <span style={{ marginLeft: "12px", color: "#444", fontSize: "18px" }}>km</span>
+        </div>
+
+        <div style={{ marginBottom: "28px" }}>
+          <label style={{ display: "block", marginBottom: "12px", fontSize: "18px", fontWeight: "bold" }}>
+            Maintenance Profile:
+          </label>
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+            {(Object.keys(MAINTENANCE_PROFILES) as MaintenanceProfile[]).map((key) => {
+              const isSelected = profile === key;
+              const { label, interval } = MAINTENANCE_PROFILES[key];
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setProfile(key)}
+                  style={{
+                    flex: "1 1 100px",
+                    minWidth: "100px",
+                    padding: "12px 16px",
+                    border: isSelected ? "3px solid #333" : "2px solid #aaa",
+                    background: isSelected ? "#f0f0e8" : "#fffef9",
+                    cursor: "pointer",
+                    textAlign: "center",
+                  }}
+                >
+                  <div style={{ fontSize: "14px", fontWeight: isSelected ? "bold" : "normal" }}>
+                    {label}
+                  </div>
+                  <div style={{ fontSize: "18px", fontWeight: "bold", marginTop: "4px" }}>
+                    {interval}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div style={{ marginBottom: "28px" }}>
@@ -175,6 +216,7 @@ function generatePDF(
   results: CategorizedItems,
   odometer: number,
   transmission: Transmission,
+  profile: MaintenanceProfile,
   drivingCondition: DrivingCondition
 ) {
   const doc = new jsPDF();
@@ -236,7 +278,8 @@ function generatePDF(
   // Header
   addText("JIMNY PH MAINTENANCE REPORT", 18, true);
   y += 3;
-  addText(`${formatKm(odometer)} | ${transmission} | ${drivingCondition} driving`, 11, false, [68, 68, 68]);
+  const profileInfo = `${MAINTENANCE_PROFILES[profile].label} (${MAINTENANCE_PROFILES[profile].interval})`;
+  addText(`${formatKm(odometer)} | ${transmission} | ${profileInfo} | ${drivingCondition} driving`, 11, false, [68, 68, 68]);
   addText(`Generated: ${new Date().toLocaleDateString()}`, 9, false, [100, 100, 100]);
   y += 5;
 
@@ -257,12 +300,14 @@ function ResultsView({
   results,
   odometer,
   transmission,
+  profile,
   drivingCondition,
   onReset,
 }: {
   results: CategorizedItems;
   odometer: number;
   transmission: Transmission;
+  profile: MaintenanceProfile;
   drivingCondition: DrivingCondition;
   onReset: () => void;
 }) {
@@ -272,7 +317,7 @@ function ResultsView({
         MAINTENANCE REPORT
       </h1>
       <p style={{ margin: "0 0 20px 0", fontSize: "16px", color: "#444" }}>
-        {formatKm(odometer)} | {transmission} | {drivingCondition} driving
+        {formatKm(odometer)} | {transmission} | {MAINTENANCE_PROFILES[profile].label} ({MAINTENANCE_PROFILES[profile].interval}) | {drivingCondition} driving
       </p>
       <hr style={{ margin: "0 0 20px 0" }} />
 
@@ -307,7 +352,7 @@ function ResultsView({
 
       <hr style={{ margin: "20px 0" }} />
       <div style={{ display: "flex", gap: "16px", flexDirection: "column" }}>
-        <button onClick={() => generatePDF(results, odometer, transmission, drivingCondition)} style={{ width: "100%", fontWeight: "bold", color: "#c41e3a" }}>
+        <button onClick={() => generatePDF(results, odometer, transmission, profile, drivingCondition)} style={{ width: "100%", fontWeight: "bold", color: "#c41e3a" }}>
           [ DOWNLOAD PDF ]
         </button>
         <button onClick={onReset} style={{ width: "100%" }}>
