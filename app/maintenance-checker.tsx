@@ -20,8 +20,8 @@ interface Props {
 export default function MaintenanceChecker({ items }: Props) {
   const [showResults, setShowResults] = useState(false);
   const [odometer, setOdometer] = useState("");
-  const [transmission, setTransmission] = useState<Transmission>("manual");
-  const [drivingCondition, setDrivingCondition] = useState<DrivingCondition>("heavy");
+  const [transmission, setTransmission] = useState<Transmission>("automatic");
+  const [drivingCondition, setDrivingCondition] = useState<DrivingCondition>("normal");
   const [results, setResults] = useState<CategorizedItems | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -59,7 +59,22 @@ export default function MaintenanceChecker({ items }: Props) {
   }
 
   return (
-    <div style={{ border: "2px solid #333", padding: "32px", background: "#fffef9" }}>
+    <div style={{ border: "2px solid #333", padding: "32px", background: "#fffef9", position: "relative" }}>
+      {/* JB74 Badge */}
+      <span style={{
+        position: "absolute",
+        top: "-16px",
+        right: "16px",
+        background: "#333",
+        color: "#fffef9",
+        padding: "8px 16px",
+        fontSize: "18px",
+        fontWeight: "bold",
+        letterSpacing: "2px"
+      }}>
+        JB74
+      </span>
+
       <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
         MAINTENANCE CHECK
       </h1>
@@ -82,6 +97,7 @@ export default function MaintenanceChecker({ items }: Props) {
             style={{ width: "100%", maxWidth: "180px" }}
             min="0"
             required
+            autoFocus
           />
           <span style={{ marginLeft: "12px", color: "#444", fontSize: "18px" }}>km</span>
         </div>
@@ -263,8 +279,13 @@ function ResultsView({
         <hr style={{ margin: "0 0 20px 0" }} />
       </div>
 
+      {/* Sticky scroll hint */}
+      <p style={{ textAlign: "center", fontSize: "14px", color: "#666", padding: "8px 32px", margin: 0, flexShrink: 0, borderBottom: "1px solid #eee" }}>
+        ↓ Scroll for more ↓
+      </p>
+
       {/* Scrollable Content */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "0 32px" }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "16px 32px 0 32px", boxShadow: "inset 0 -20px 20px -20px rgba(0,0,0,0.15)" }}>
         <Section
           title="REPLACE NOW"
           items={results.replace}
@@ -293,13 +314,14 @@ function ResultsView({
           emptyText=""
           collapsed
         />
+
       </div>
 
       {/* Fixed Footer */}
       <div style={{ padding: "0 32px 32px 32px", flexShrink: 0 }}>
         <hr style={{ margin: "20px 0" }} />
         <div style={{ display: "flex", gap: "16px", flexDirection: "column" }}>
-          <button onClick={() => generatePDF(results, odometer, transmission, drivingCondition)} style={{ width: "100%", fontWeight: "bold" }}>
+          <button onClick={() => generatePDF(results, odometer, transmission, drivingCondition)} style={{ width: "100%", fontWeight: "bold", color: "#c41e3a" }}>
             [ DOWNLOAD PDF ]
           </button>
           <button onClick={onReset} style={{ width: "100%" }}>
