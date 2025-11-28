@@ -424,37 +424,44 @@ function Section({
               {emptyText}
             </p>
           )}
-          {items.map(({ item, result }, index) => (
-            <div
-              key={item.name}
-              style={{
-                padding: "12px 12px 12px 28px",
-                fontSize: "16px",
-                background: index % 2 === 0 ? "#f5f5f2" : "transparent",
-                borderLeft: "3px solid currentColor",
-                marginLeft: "6px",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" }}>
-                <span style={{ fontWeight: "bold" }}>{item.name}</span>
-                {result.kmUntilDue > 0 && (
-                  <span style={{ fontWeight: "500", color: "#555" }}>
-                    {formatKm(result.kmUntilDue)} left
-                  </span>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+              gap: "8px",
+            }}
+          >
+            {items.map(({ item, result }) => (
+              <div
+                key={item.name}
+                style={{
+                  padding: "12px 12px 12px 16px",
+                  fontSize: "16px",
+                  background: "#f5f5f2",
+                  borderLeft: "3px solid currentColor",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" }}>
+                  <span style={{ fontWeight: "bold" }}>{item.name}</span>
+                  {result.kmUntilDue > 0 && (
+                    <span style={{ fontWeight: "500", color: "#555" }}>
+                      {formatKm(result.kmUntilDue)} left
+                    </span>
+                  )}
+                </div>
+                {result.intervalKm > 0 && (
+                  <div style={{ fontSize: "14px", color: "#444", paddingLeft: "12px", marginTop: "4px" }}>
+                    every {formatKm(result.intervalKm)}
+                  </div>
+                )}
+                {item.notes && (
+                  <div style={{ fontSize: "13px", color: "#666", paddingLeft: "12px", marginTop: "6px", lineHeight: "1.4" }}>
+                    {item.notes}
+                  </div>
                 )}
               </div>
-              {result.intervalKm > 0 && (
-                <div style={{ fontSize: "14px", color: "#444", paddingLeft: "16px", marginTop: "4px" }}>
-                  every {formatKm(result.intervalKm)}
-                </div>
-              )}
-              {item.notes && (
-                <div style={{ fontSize: "13px", color: "#666", paddingLeft: "16px", marginTop: "6px", lineHeight: "1.4" }}>
-                  {item.notes}
-                </div>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </>
       )}
     </div>

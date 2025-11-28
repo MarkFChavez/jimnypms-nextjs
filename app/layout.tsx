@@ -61,7 +61,7 @@ export default function RootLayout({
         </header>
 
         {/* Main Content */}
-        <main style={{ maxWidth: "640px", margin: "0 auto", padding: "32px 24px", flex: 1, width: "100%" }}>
+        <main style={{ maxWidth: "960px", margin: "0 auto", padding: "32px 24px", flex: 1, width: "100%" }}>
           {children}
         </main>
 
