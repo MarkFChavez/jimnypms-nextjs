@@ -168,17 +168,6 @@ hr {
   border-color: var(--ok);
 }
 
-/* Scroll hint - mobile only */
-.scroll-hint {
-  display: none !important;
-}
-
-@media (max-width: 640px) {
-  .scroll-hint {
-    display: block !important;
-  }
-}
-
 /* Print styles */
 @media print {
   /* Hide non-essential elements */

@@ -267,67 +267,52 @@ function ResultsView({
   onReset: () => void;
 }) {
   return (
-    <div style={{ border: "2px solid #333", background: "#fffef9", display: "flex", flexDirection: "column", maxHeight: "calc(100vh - 200px)" }}>
-      {/* Fixed Header */}
-      <div style={{ padding: "32px 32px 0 32px", flexShrink: 0 }}>
-        <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
-          MAINTENANCE REPORT
-        </h1>
-        <p style={{ margin: "0 0 20px 0", fontSize: "16px", color: "#444" }}>
-          {formatKm(odometer)} | {transmission} | {drivingCondition} driving
-        </p>
-        <hr style={{ margin: "0 0 20px 0" }} />
-      </div>
-
-      {/* Sticky scroll hint - mobile only */}
-      <p className="scroll-hint" style={{ textAlign: "center", fontSize: "14px", color: "#666", padding: "8px 32px", margin: 0, flexShrink: 0, borderBottom: "1px solid #eee" }}>
-        ↓ Scroll for more ↓
+    <div style={{ border: "2px solid #333", background: "#fffef9", padding: "32px" }}>
+      <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
+        MAINTENANCE REPORT
+      </h1>
+      <p style={{ margin: "0 0 20px 0", fontSize: "16px", color: "#444" }}>
+        {formatKm(odometer)} | {transmission} | {drivingCondition} driving
       </p>
+      <hr style={{ margin: "0 0 20px 0" }} />
 
-      {/* Scrollable Content */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "16px 32px 0 32px", boxShadow: "inset 0 -20px 20px -20px rgba(0,0,0,0.15)" }}>
-        <Section
-          title="REPLACE NOW"
-          items={results.replace}
-          statusClass="status-replace"
-          emptyText="Nothing needs immediate replacement"
-        />
+      <Section
+        title="REPLACE NOW"
+        items={results.replace}
+        statusClass="status-replace"
+        emptyText="Nothing needs immediate replacement"
+      />
 
-        <Section
-          title="INSPECT"
-          items={results.inspect}
-          statusClass="status-inspect"
-          emptyText="Nothing needs inspection"
-        />
+      <Section
+        title="INSPECT"
+        items={results.inspect}
+        statusClass="status-inspect"
+        emptyText="Nothing needs inspection"
+      />
 
-        <Section
-          title="DUE SOON"
-          items={results.dueSoon}
-          statusClass="status-due-soon"
-          emptyText="Nothing due soon"
-        />
+      <Section
+        title="DUE SOON"
+        items={results.dueSoon}
+        statusClass="status-due-soon"
+        emptyText="Nothing due soon"
+      />
 
-        <Section
-          title="OK"
-          items={results.ok}
-          statusClass="status-ok"
-          emptyText=""
-          collapsed
-        />
+      <Section
+        title="OK"
+        items={results.ok}
+        statusClass="status-ok"
+        emptyText=""
+        collapsed
+      />
 
-      </div>
-
-      {/* Fixed Footer */}
-      <div style={{ padding: "0 32px 32px 32px", flexShrink: 0 }}>
-        <hr style={{ margin: "20px 0" }} />
-        <div style={{ display: "flex", gap: "16px", flexDirection: "column" }}>
-          <button onClick={() => generatePDF(results, odometer, transmission, drivingCondition)} style={{ width: "100%", fontWeight: "bold", color: "#c41e3a" }}>
-            [ DOWNLOAD PDF ]
-          </button>
-          <button onClick={onReset} style={{ width: "100%" }}>
-            &larr; Check Different Mileage
-          </button>
-        </div>
+      <hr style={{ margin: "20px 0" }} />
+      <div style={{ display: "flex", gap: "16px", flexDirection: "column" }}>
+        <button onClick={() => generatePDF(results, odometer, transmission, drivingCondition)} style={{ width: "100%", fontWeight: "bold", color: "#c41e3a" }}>
+          [ DOWNLOAD PDF ]
+        </button>
+        <button onClick={onReset} style={{ width: "100%" }}>
+          &larr; Check Different Mileage
+        </button>
       </div>
     </div>
   );
