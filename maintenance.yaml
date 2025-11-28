@@ -8,6 +8,14 @@
 # Edit this file to customize your maintenance schedule
 
 items:
+  # === BREAK-IN ===
+  - name: Break-in Service (Engine Oil & Filter)
+    interval:
+      normal: 1000
+      heavy: 1000
+    oneTime: true
+    notes: First oil change after break-in period. Flushes metal particles from new engine. Required at 1,000 km.
+
   # === ENGINE ===
   - name: Engine Oil & Filter
     interval:
@@ -32,6 +40,12 @@ items:
       normal: 60000
       heavy: 45000
     notes: Inspect at 30,000 km intervals. OEM from Suzuki Casa, Gates brand at Blade Auto.
+
+  - name: AUX Fan Motor
+    interval:
+      normal: 60000
+      heavy: 60000
+    notes: Carbon brush wears out and causes the fan to not work.
 
   # === FILTERS ===
   - name: Engine Air Filter
@@ -147,3 +161,5 @@ items:
       normal: 15000
       heavy: 15000
     notes: Rotate tyres every oil change. Check pressure monthly. Alignment recommended after hitting potholes.
+
+  

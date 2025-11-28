@@ -10,6 +10,7 @@ export interface MaintenanceItem {
     heavy: number;
   };
   for?: "all" | "manual" | "automatic";
+  oneTime?: boolean;
   notes?: string;
 }
 
@@ -61,7 +62,13 @@ export function calculateSimpleStatus(
   }
 
   // Calculate where we are in the current interval cycle
-  const kmIntoCurrentCycle = vehicle.odometer % intervalKm;
+  let kmIntoCurrentCycle = vehicle.odometer % intervalKm;
+
+  // Edge case: if exactly at interval boundary, treat as 100% (just completed)
+  if (kmIntoCurrentCycle === 0 && vehicle.odometer > 0) {
+    kmIntoCurrentCycle = intervalKm;
+  }
+
   const kmUntilDue = intervalKm - kmIntoCurrentCycle;
   const percentUsed = Math.round((kmIntoCurrentCycle / intervalKm) * 100);
 
@@ -96,6 +103,12 @@ export function categorizeMaintenanceItems(
 
   for (const item of items) {
     if (!isItemApplicable(item, vehicle.transmission)) {
+      continue;
+    }
+
+    // Skip one-time items that are already completed
+    const intervalKm = item.interval[vehicle.drivingCondition];
+    if (item.oneTime && vehicle.odometer > intervalKm) {
       continue;
     }
 
