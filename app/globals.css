@@ -140,6 +140,17 @@ button:active {
   background: #e8e7e4;
 }
 
+button.back-link,
+button.back-link:hover,
+button.back-link:active {
+  background: none;
+  border: none;
+}
+
+button.back-link:hover {
+  text-decoration: underline;
+}
+
 /* Horizontal rule */
 hr {
   border: none;

@@ -318,13 +318,39 @@ function ResultsView({
   onReset: () => void;
 }) {
   return (
-    <div style={{ border: "2px solid #333", background: "#fffef9", padding: "32px" }}>
-      <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
-        MAINTENANCE REPORT
-      </h1>
-      <p style={{ margin: "0 0 20px 0", fontSize: "16px", color: "#444" }}>
-        {formatKm(odometer)} | {transmission} | {MAINTENANCE_PROFILES[profile].label} ({MAINTENANCE_PROFILES[profile].interval}) | {drivingCondition} driving
-      </p>
+    <>
+      <button
+        onClick={onReset}
+        className="cursor-pointer back-link"
+        style={{
+          marginBottom: "12px",
+          fontSize: "14px",
+          padding: "8px 0",
+          background: "none",
+          border: "none",
+          color: "#555",
+        }}
+      >
+        &larr; Back to form
+      </button>
+      <div style={{ border: "2px solid #333", background: "#fffef9", padding: "32px" }}>
+        <h1 style={{ margin: "0 0 8px 0", fontSize: "22px", fontWeight: "bold", letterSpacing: "1px" }}>
+          MAINTENANCE REPORT
+        </h1>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", margin: "0 0 20px 0" }}>
+        <span style={{ background: "#e8e8e4", padding: "4px 12px", borderRadius: "16px", fontSize: "14px" }}>
+          {formatKm(odometer)}
+        </span>
+        <span style={{ background: "#e8e8e4", padding: "4px 12px", borderRadius: "16px", fontSize: "14px" }}>
+          {transmission}
+        </span>
+        <span style={{ background: "#e8e8e4", padding: "4px 12px", borderRadius: "16px", fontSize: "14px" }}>
+          {MAINTENANCE_PROFILES[profile].label}
+        </span>
+        <span style={{ background: "#e8e8e4", padding: "4px 12px", borderRadius: "16px", fontSize: "14px" }}>
+          {drivingCondition} driving
+        </span>
+      </div>
       <hr style={{ margin: "0 0 20px 0" }} />
 
       <Section
@@ -365,7 +391,8 @@ function ResultsView({
           &larr; Check Different Mileage
         </button>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
