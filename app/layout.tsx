@@ -78,8 +78,9 @@ export default function RootLayout({
               maxWidth: "640px",
               margin: "0 auto",
               display: "flex",
-              justifyContent: "space-between",
+              flexDirection: "column",
               alignItems: "center",
+              gap: "16px",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -122,7 +123,7 @@ export default function RootLayout({
                 margin: 0,
                 fontSize: "14px",
                 color: "#444",
-                textAlign: "right",
+                textAlign: "center",
               }}
             >
               For Philippine Jimny JB74 owners.<br />
