@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import {
   categorizeMaintenanceItems,
@@ -26,6 +26,12 @@ export default function MaintenanceChecker({ items }: Props) {
   const [profile, setProfile] = useState<MaintenanceProfile>("conservative");
   const [drivingCondition, setDrivingCondition] = useState<DrivingCondition>("normal");
   const [results, setResults] = useState<CategorizedItems | null>(null);
+
+  useEffect(() => {
+    if (showResults) {
+      window.scrollTo(0, 0);
+    }
+  }, [showResults]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
