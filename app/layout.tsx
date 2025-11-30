@@ -83,27 +83,19 @@ export default function RootLayout({
               gap: "16px",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <a
-                href="https://www.instagram.com/happythejimny"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="/footer-logo.jpg"
-                  alt="Happy The Jimny Logo"
-                  style={{ height: "56px", borderRadius: "50%" }}
-                />
-              </a>
-              <a
-                href="https://www.instagram.com/happythejimny"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: "#333", fontSize: "16px", fontWeight: "bold", textDecoration: "none" }}
-              >
-                @happythejimny
-              </a>
-            </div>
+            <a
+              href="https://www.instagram.com/happythejimny"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "#666" }}
+            >
+              <img
+                src="/footer-logo.jpg"
+                alt="Happy The Jimny Logo"
+                style={{ height: "32px", borderRadius: "50%" }}
+              />
+              <span style={{ fontSize: "14px" }}>@happythejimny</span>
+            </a>
             <p
               style={{
                 margin: 0,
@@ -115,6 +107,60 @@ export default function RootLayout({
               For Philippine Jimny JB74 owners.<br />
               Based on service manual intervals.
             </p>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "12px",
+              background: "#f8f5f2",
+              padding: "16px",
+              borderRadius: "8px",
+            }}>
+              <p style={{ margin: 0, fontSize: "14px", color: "#8b7355" }}>
+                Join local groups
+              </p>
+              <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", justifyContent: "center" }}>
+                <a
+                  href="https://www.instagram.com/jb74orce"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "#8b7355" }}
+                >
+                  <img
+                    src="/jb74orce-logo.jpg"
+                    alt="JB74orce Logo"
+                    style={{ height: "40px", borderRadius: "50%" }}
+                  />
+                  <span style={{ fontSize: "16px" }}>JB74orce</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/club74ph"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "#8b7355" }}
+                >
+                  <img
+                    src="/club74-logo.jpg"
+                    alt="Club 74 Logo"
+                    style={{ height: "40px", borderRadius: "50%" }}
+                  />
+                  <span style={{ fontSize: "16px" }}>Club 74</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/jimny.mnl.community"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "#8b7355" }}
+                >
+                  <img
+                    src="/jimny-mnl-logo.jpg"
+                    alt="Jimny MNL Logo"
+                    style={{ height: "40px", borderRadius: "50%" }}
+                  />
+                  <span style={{ fontSize: "16px" }}>Jimny MNL</span>
+                </a>
+              </div>
+            </div>
             <p style={{ margin: 0, fontSize: "12px", color: "#888" }}>
               v1.0
             </p>
