@@ -84,38 +84,24 @@ export default function RootLayout({
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <div style={{ position: "relative", display: "inline-block" }}>
-                <a
-                  href="https://www.instagram.com/club74ph/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src="/club-logo.jpg"
-                    alt="Club74PH Logo"
-                    style={{ height: "56px", borderRadius: "50%" }}
-                  />
-                </a>
-                <a
-                  href="https://www.instagram.com/happythejimny"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ position: "absolute", bottom: "-4px", right: "-12px" }}
-                >
-                  <img
-                    src="/footer-logo.jpg"
-                    alt="Happy The Jimny Logo"
-                    style={{ height: "32px", borderRadius: "50%", border: "2px solid #fffef9" }}
-                  />
-                </a>
-              </div>
               <a
-                href="https://www.instagram.com/club74ph/"
+                href="https://www.instagram.com/happythejimny"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="/footer-logo.jpg"
+                  alt="Happy The Jimny Logo"
+                  style={{ height: "56px", borderRadius: "50%" }}
+                />
+              </a>
+              <a
+                href="https://www.instagram.com/happythejimny"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: "#333", fontSize: "16px", fontWeight: "bold", textDecoration: "none" }}
               >
-                @club74ph
+                @happythejimny
               </a>
             </div>
             <p
