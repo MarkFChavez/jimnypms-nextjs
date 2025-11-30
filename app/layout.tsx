@@ -111,7 +111,7 @@ export default function RootLayout({
                   href="https://www.instagram.com/jb74orce"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "#8b7355" }}
+                  className="flex items-center gap-2 no-underline text-[#8b7355] hover:text-[#5c4d38] hover:underline transition-colors duration-150"
                 >
                   <img
                     src="/jb74orce-logo.jpg"
@@ -124,7 +124,7 @@ export default function RootLayout({
                   href="https://www.instagram.com/club74ph"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "#8b7355" }}
+                  className="flex items-center gap-2 no-underline text-[#8b7355] hover:text-[#5c4d38] hover:underline transition-colors duration-150"
                 >
                   <img
                     src="/club74-logo.jpg"
@@ -137,7 +137,7 @@ export default function RootLayout({
                   href="https://www.instagram.com/jimny.mnl.community"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "#8b7355" }}
+                  className="flex items-center gap-2 no-underline text-[#8b7355] hover:text-[#5c4d38] hover:underline transition-colors duration-150"
                 >
                   <img
                     src="/jimny-mnl-logo.jpg"
