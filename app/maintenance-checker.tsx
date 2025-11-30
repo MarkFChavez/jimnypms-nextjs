@@ -23,7 +23,7 @@ export default function MaintenanceChecker({ items }: Props) {
   const [showResults, setShowResults] = useState(false);
   const [odometer, setOdometer] = useState("");
   const [transmission, setTransmission] = useState<Transmission>("automatic");
-  const [profile, setProfile] = useState<MaintenanceProfile>("conservative");
+  const [profile, setProfile] = useState<MaintenanceProfile>("strict");
   const [drivingCondition, setDrivingCondition] = useState<DrivingCondition>("normal");
   const [results, setResults] = useState<CategorizedItems | null>(null);
 
@@ -52,7 +52,7 @@ export default function MaintenanceChecker({ items }: Props) {
 
   const handleReset = () => {
     setOdometer("");
-    setProfile("conservative");
+    setProfile("strict");
     setShowResults(false);
     setResults(null);
   };
@@ -116,7 +116,7 @@ export default function MaintenanceChecker({ items }: Props) {
 
         <div style={{ marginBottom: "28px" }}>
           <label style={{ display: "block", marginBottom: "12px", fontSize: "18px", fontWeight: "bold" }}>
-            Maintenance Profile:
+            How often do you change oil?
           </label>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             {(Object.keys(MAINTENANCE_PROFILES) as MaintenanceProfile[]).map((key) => {
@@ -137,11 +137,11 @@ export default function MaintenanceChecker({ items }: Props) {
                     textAlign: "center",
                   }}
                 >
-                  <div style={{ fontSize: "14px", fontWeight: isSelected ? "bold" : "normal" }}>
-                    {label}
-                  </div>
-                  <div style={{ fontSize: "18px", fontWeight: "bold", marginTop: "4px" }}>
+                  <div style={{ fontSize: "24px", fontWeight: "bold" }}>
                     {interval}
+                  </div>
+                  <div style={{ fontSize: "12px", color: "#666", marginTop: "4px" }}>
+                    {label}
                   </div>
                 </button>
               );

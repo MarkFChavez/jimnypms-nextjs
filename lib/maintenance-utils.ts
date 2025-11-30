@@ -5,9 +5,9 @@ export type SimpleStatus = "replace" | "inspect" | "due-soon" | "ok";
 
 // Maintenance profiles for different owner preferences (only affects oil change interval)
 export const MAINTENANCE_PROFILES = {
-  conservative: { label: "Conservative", interval: "10k", oilChangeKm: 10000 },
-  serviceManual: { label: "Service Manual", interval: "15k", oilChangeKm: 15000 },
-  extended: { label: "Extended", interval: "20k", oilChangeKm: 20000 },
+  strict: { label: "Strict", interval: "5k km", oilChangeKm: 5000 },
+  conservative: { label: "Conservative", interval: "10k km", oilChangeKm: 10000 },
+  serviceManual: { label: "Service Manual", interval: "15k km", oilChangeKm: 15000 },
 } as const;
 
 export type MaintenanceProfile = keyof typeof MAINTENANCE_PROFILES;
