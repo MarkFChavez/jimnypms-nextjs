@@ -83,19 +83,6 @@ export default function RootLayout({
               gap: "16px",
             }}
           >
-            <a
-              href="https://www.instagram.com/happythejimny"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "#666" }}
-            >
-              <img
-                src="/footer-logo.jpg"
-                alt="Happy The Jimny Logo"
-                style={{ height: "32px", borderRadius: "50%" }}
-              />
-              <span style={{ fontSize: "14px" }}>@happythejimny</span>
-            </a>
             <p
               style={{
                 margin: 0,
