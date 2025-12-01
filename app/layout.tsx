@@ -57,6 +57,18 @@ export default function RootLayout({
             >
               JIMNY PH MAINTENANCE
             </span>
+            <span
+              style={{
+                background: "#333",
+                color: "#fffef9",
+                fontSize: "12px",
+                fontWeight: "bold",
+                padding: "4px 8px",
+                letterSpacing: "1px",
+              }}
+            >
+              BETA
+            </span>
           </div>
         </header>
 
