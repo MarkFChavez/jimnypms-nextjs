@@ -45,7 +45,7 @@ items:
     interval:
       normal: 60000
       heavy: 60000
-    notes: Carbon brush wears out and causes the fan to not work.
+    notes: Carbon brush wears out and causes the fan to malfunction.
 
   # === FILTERS ===
   - name: Engine Air Filter
